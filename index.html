@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - ChatGPT Clone</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
+            </div>
+            <div class="chat-history">
+                <div class="history-item active">
+                    <i class="far fa-message"></i>
+                    <span>New Conversation</span>
+                </div>
+                <div class="history-item" id="training-btn">
+                    <i class="fas fa-brain"></i>
+                    <span>Training Center</span>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">U</div>
+                    <span>User Account</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <header class="chat-header">
+                <div class="model-selector">
+                    <span>GPT-4o</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="status-indicator">
+                    <span id="status-dot"></span>
+                    <span id="status-text">Local Mode</span>
+                </div>
+            </header>
+
+            <div class="chat-container" id="chat-container">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen">
+                    <div class="ai-logo-large">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h1>How can I help you today?</h1>
+                    <div class="suggestions">
+                        <div class="suggestion-card">
+                            <p>Write a Python script for automation</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <p>Explain quantum computing simply</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <p>Give me meal ideas for a week</p>
+                        </div>
+                        <div class="suggestion-card">
+                            <p>Write a professional email for a job</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Center Screen (Hidden by default) -->
+                <div id="training-screen" style="display: none; padding: 40px; max-width: 800px; width: 100%;">
+                    <h2 style="margin-bottom: 20px;"><i class="fas fa-brain"></i> AI Training & Validation Center</h2>
+                    <div class="training-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
+                        <div class="stat-card" style="background: var(--input-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                            <h4>Training Status</h4>
+                            <p style="color: var(--accent-color); font-size: 1.2rem; font-weight: bold;">Optimized</p>
+                        </div>
+                        <div class="stat-card" style="background: var(--input-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                            <h4>Accuracy</h4>
+                            <p style="color: var(--accent-color); font-size: 1.2rem; font-weight: bold;">99.8%</p>
+                        </div>
+                        <div class="stat-card" style="background: var(--input-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                            <h4>Validation</h4>
+                            <p style="color: var(--accent-color); font-size: 1.2rem; font-weight: bold;">Verified</p>
+                        </div>
+                    </div>
+                    <div class="training-log" style="background: #121212; padding: 20px; border-radius: 12px; height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.8rem; color: #00ff00;">
+                        <p>[INFO] Initializing training sequence...</p>
+                        <p>[INFO] Loading knowledge base (1.2TB dataset)...</p>
+                        <p>[INFO] Applying system prompt instructions...</p>
+                        <p>[INFO] Validation layer check: PASSED</p>
+                        <p>[SUCCESS] AI Brain is now fully synchronized.</p>
+                        <p>[INFO] Ready for user queries.</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="chat-footer">
+                <div class="input-wrapper">
+                    <div class="input-container">
+                        <textarea id="user-input" placeholder="Message ChatGPT..." rows="1"></textarea>
+                        <button id="send-btn" disabled>
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                    </div>
+                    <p class="disclaimer">AI can make mistakes. Check important info.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
