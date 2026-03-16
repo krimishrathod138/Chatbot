@@ -1,15 +1,15 @@
 # Installation
-> `npm install --save @types/node`
+> `npm install --save @types/node-fetch`
 
 # Summary
-This package contains type definitions for node (https://nodejs.org/).
+This package contains type definitions for node-fetch (https://github.com/bitinn/node-fetch).
 
 # Details
-Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node/v18.
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch.
 
 ### Additional Details
- * Last updated: Thu, 09 Oct 2025 17:35:09 GMT
- * Dependencies: [undici-types](https://npmjs.com/package/undici-types)
+ * Last updated: Tue, 29 Jul 2025 23:35:58 GMT
+ * Dependencies: [@types/node](https://npmjs.com/package/@types/node), [form-data](https://npmjs.com/package/form-data)
 
 # Credits
-These definitions were written by [Microsoft TypeScript](https://github.com/Microsoft), [Alberto Schiabel](https://github.com/jkomyno), [Andrew Makarov](https://github.com/r3nya), [Benjamin Toueg](https://github.com/btoueg), [David Junger](https://github.com/touffy), [Mohsen Azimi](https://github.com/mohsen1), [Nikita Galkin](https://github.com/galkin), [Sebastian Silbermann](https://github.com/eps1lon), [Simon Schick](https://github.com/SimonSchick), [Wilco Bakker](https://github.com/WilcoBakker), [Marcin Kopacz](https://github.com/chyzwar), [Trivikram Kamat](https://github.com/trivikr), [Junxiao Shi](https://github.com/yoursunny), [Ilia Baryshnikov](https://github.com/qwelias), [ExE Boss](https://github.com/ExE-Boss), [Piotr Błażejewicz](https://github.com/peterblazejewicz), [Anna Henningsen](https://github.com/addaleax), [Victor Perin](https://github.com/victorperin), [NodeJS Contributors](https://github.com/NodeJS), [Linus Unnebäck](https://github.com/LinusU), [wafuwafu13](https://github.com/wafuwafu13), [Matteo Collina](https://github.com/mcollina), and [Dmitry Semigradsky](https://github.com/Semigradsky).
+These definitions were written by [Torsten Werner](https://github.com/torstenwerner), [Niklas Lindgren](https://github.com/nikcorg), [Vinay Bedre](https://github.com/vinaybedre), [Antonio Román](https://github.com/kyranet), [Andrew Leedham](https://github.com/AndrewLeedham), [Jason Li](https://github.com/JasonLi914), [Steve Faulkner](https://github.com/southpolesteve), [ExE Boss](https://github.com/ExE-Boss), [Alex Savin](https://github.com/alexandrusavin), [Alexis Tyler](https://github.com/OmgImAlexis), [Jakub Kisielewski](https://github.com/kbkk), and [David Glasser](https://github.com/glasser).
