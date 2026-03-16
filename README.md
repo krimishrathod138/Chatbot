@@ -1,20 +1,15 @@
-# [Deprecated] Google AI JavaScript SDK for the Gemini API
+# Installation
+> `npm install --save @types/node`
 
-With Gemini 2.0, we took the chance to create a single unified SDK for all developers who want to use Google's GenAI models (Gemini, Veo, Imagen, etc). As part of that process, we took all of the feedback from this SDK and what developers like about other SDKs in the ecosystem to create the [Google Gen AI SDK](https://github.com/googleapis/js-genai). 
+# Summary
+This package contains type definitions for node (https://nodejs.org/).
 
-The full migration guide from the old SDK to new SDK is available in the [Gemini API docs](https://ai.google.dev/gemini-api/docs/migrate).
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node/v18.
 
-The Gemini API docs are fully updated to show examples of the new Google Gen AI SDK. We know how disruptive an SDK change can be and don't take this change lightly, but our goal is to create an extremely simple and clear path for developers to build with our models so it felt necessary to make this change.
+### Additional Details
+ * Last updated: Thu, 09 Oct 2025 17:35:09 GMT
+ * Dependencies: [undici-types](https://npmjs.com/package/undici-types)
 
-Thank you for building with Gemini and [let us know](https://discuss.ai.google.dev/c/gemini-api/4) if you need any help!
-
-**Please be advised that this repository is now considered legacy.** For the latest features, performance improvements, and active development, we strongly recommend migrating to the official **[Google Generative AI SDK for JavaScript](https://github.com/googleapis/js-genai)**.
-
-**Support Plan for this Repository:**
-
-*   **Limited Maintenance:** Development is now restricted to **critical bug fixes only**. No new features will be added.
-*   **Purpose:** This limited support aims to provide stability for users while they transition to the new SDK.
-*   **End-of-Life Date:** All support for this repository (including bug fixes) will permanently end on **August 31st, 2025**.
-
-We encourage all users to begin planning their migration to the [Google Generative AI SDK](https://github.com/googleapis/js-genai) to ensure continued access to the latest capabilities and support.
-
+# Credits
+These definitions were written by [Microsoft TypeScript](https://github.com/Microsoft), [Alberto Schiabel](https://github.com/jkomyno), [Andrew Makarov](https://github.com/r3nya), [Benjamin Toueg](https://github.com/btoueg), [David Junger](https://github.com/touffy), [Mohsen Azimi](https://github.com/mohsen1), [Nikita Galkin](https://github.com/galkin), [Sebastian Silbermann](https://github.com/eps1lon), [Simon Schick](https://github.com/SimonSchick), [Wilco Bakker](https://github.com/WilcoBakker), [Marcin Kopacz](https://github.com/chyzwar), [Trivikram Kamat](https://github.com/trivikr), [Junxiao Shi](https://github.com/yoursunny), [Ilia Baryshnikov](https://github.com/qwelias), [ExE Boss](https://github.com/ExE-Boss), [Piotr Błażejewicz](https://github.com/peterblazejewicz), [Anna Henningsen](https://github.com/addaleax), [Victor Perin](https://github.com/victorperin), [NodeJS Contributors](https://github.com/NodeJS), [Linus Unnebäck](https://github.com/LinusU), [wafuwafu13](https://github.com/wafuwafu13), [Matteo Collina](https://github.com/mcollina), and [Dmitry Semigradsky](https://github.com/Semigradsky).

@@ -1,22 +1,92 @@
 /**
- * @license
- * Copyright 2024 Google LLC
+ * License for programmatically and manually incorporated
+ * documentation aka. `JSDoc` from https://github.com/nodejs/node/tree/master/doc
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright Node.js contributors. All rights reserved.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
-export * from "./files";
-export * from "./caching";
-export * from "./shared";
-export { RequestOptions, Tool, CodeExecutionTool, SingleRequestOptions, } from "../requests";
-export * from "../content";
-export { FunctionCallingMode } from "../enums";
+
+// NOTE: These definitions support Node.js and TypeScript 5.7+.
+
+// Reference required TypeScript libs:
+/// <reference lib="es2020" />
+
+// TypeScript backwards-compatibility definitions:
+/// <reference path="compatibility/index.d.ts" />
+
+// Definitions specific to TypeScript 5.7+:
+/// <reference path="globals.typedarray.d.ts" />
+/// <reference path="buffer.buffer.d.ts" />
+
+// Definitions for Node.js modules that are not specific to any version of TypeScript:
+/// <reference path="globals.d.ts" />
+/// <reference path="web-globals/abortcontroller.d.ts" />
+/// <reference path="web-globals/domexception.d.ts" />
+/// <reference path="web-globals/events.d.ts" />
+/// <reference path="web-globals/fetch.d.ts" />
+/// <reference path="assert.d.ts" />
+/// <reference path="assert/strict.d.ts" />
+/// <reference path="async_hooks.d.ts" />
+/// <reference path="buffer.d.ts" />
+/// <reference path="child_process.d.ts" />
+/// <reference path="cluster.d.ts" />
+/// <reference path="console.d.ts" />
+/// <reference path="constants.d.ts" />
+/// <reference path="crypto.d.ts" />
+/// <reference path="dgram.d.ts" />
+/// <reference path="diagnostics_channel.d.ts" />
+/// <reference path="dns.d.ts" />
+/// <reference path="dns/promises.d.ts" />
+/// <reference path="domain.d.ts" />
+/// <reference path="events.d.ts" />
+/// <reference path="fs.d.ts" />
+/// <reference path="fs/promises.d.ts" />
+/// <reference path="http.d.ts" />
+/// <reference path="http2.d.ts" />
+/// <reference path="https.d.ts" />
+/// <reference path="inspector.generated.d.ts" />
+/// <reference path="module.d.ts" />
+/// <reference path="net.d.ts" />
+/// <reference path="os.d.ts" />
+/// <reference path="path.d.ts" />
+/// <reference path="perf_hooks.d.ts" />
+/// <reference path="process.d.ts" />
+/// <reference path="punycode.d.ts" />
+/// <reference path="querystring.d.ts" />
+/// <reference path="readline.d.ts" />
+/// <reference path="readline/promises.d.ts" />
+/// <reference path="repl.d.ts" />
+/// <reference path="stream.d.ts" />
+/// <reference path="stream/promises.d.ts" />
+/// <reference path="stream/consumers.d.ts" />
+/// <reference path="stream/web.d.ts" />
+/// <reference path="string_decoder.d.ts" />
+/// <reference path="test.d.ts" />
+/// <reference path="timers.d.ts" />
+/// <reference path="timers/promises.d.ts" />
+/// <reference path="tls.d.ts" />
+/// <reference path="trace_events.d.ts" />
+/// <reference path="tty.d.ts" />
+/// <reference path="url.d.ts" />
+/// <reference path="util.d.ts" />
+/// <reference path="v8.d.ts" />
+/// <reference path="vm.d.ts" />
+/// <reference path="wasi.d.ts" />
+/// <reference path="worker_threads.d.ts" />
+/// <reference path="zlib.d.ts" />
