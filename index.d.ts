@@ -1,239 +1,94 @@
-/// <reference types="node" />
+type Intrinsic = typeof globalThis;
 
-import FormData = require("form-data");
-import { RequestOptions } from "http";
-import { URL, URLSearchParams } from "url";
-import { AbortSignal } from "./externals";
+type IntrinsicName = keyof Intrinsic | `%${keyof Intrinsic}%`;
 
-declare class Request extends Body {
-    constructor(input: RequestInfo, init?: RequestInit);
-    clone(): Request;
-    context: RequestContext;
-    headers: Headers;
-    method: string;
-    redirect: RequestRedirect;
-    referrer: string;
-    url: string;
+type IntrinsicPath = IntrinsicName | `${StripPercents<IntrinsicName>}.${string}` | `%${StripPercents<IntrinsicName>}.${string}%`;
 
-    // node-fetch extensions to the whatwg/fetch spec
-    agent?: RequestOptions["agent"] | ((parsedUrl: URL) => RequestOptions["agent"]);
-    compress: boolean;
-    counter: number;
-    follow: number;
-    hostname: string;
-    port?: number | undefined;
-    protocol: string;
-    size: number;
-    timeout: number;
+type AllowMissing = boolean;
+
+type StripPercents<T extends string> = T extends `%${infer U}%` ? U : T;
+
+type BindMethodPrecise<F> =
+  F extends (this: infer This, ...args: infer Args) => infer R
+  ? (obj: This, ...args: Args) => R
+  : F extends {
+    (this: infer This1, ...args: infer Args1): infer R1;
+    (this: infer This2, ...args: infer Args2): infer R2
+  }
+  ? {
+    (obj: This1, ...args: Args1): R1;
+    (obj: This2, ...args: Args2): R2
+  }
+  : never
+
+// Extract method type from a prototype
+type GetPrototypeMethod<T extends keyof typeof globalThis, M extends string> =
+  (typeof globalThis)[T] extends { prototype: any }
+  ? M extends keyof (typeof globalThis)[T]['prototype']
+  ? (typeof globalThis)[T]['prototype'][M]
+  : never
+  : never
+
+// Get static property/method
+type GetStaticMember<T extends keyof typeof globalThis, P extends string> =
+  P extends keyof (typeof globalThis)[T] ? (typeof globalThis)[T][P] : never
+
+// Type that maps string path to actual bound function or value with better precision
+type BoundIntrinsic<S extends string> =
+  S extends `${infer Obj}.prototype.${infer Method}`
+  ? Obj extends keyof typeof globalThis
+  ? BindMethodPrecise<GetPrototypeMethod<Obj, Method & string>>
+  : unknown
+  : S extends `${infer Obj}.${infer Prop}`
+  ? Obj extends keyof typeof globalThis
+  ? GetStaticMember<Obj, Prop & string>
+  : unknown
+  : unknown
+
+declare function arraySlice<T>(array: readonly T[], start?: number, end?: number): T[];
+declare function arraySlice<T>(array: ArrayLike<T>, start?: number, end?: number): T[];
+declare function arraySlice<T>(array: IArguments, start?: number, end?: number): T[];
+
+// Special cases for methods that need explicit typing
+interface SpecialCases {
+  '%Object.prototype.isPrototypeOf%': (thisArg: {}, obj: unknown) => boolean;
+  '%String.prototype.replace%': {
+    (str: string, searchValue: string | RegExp, replaceValue: string): string;
+    (str: string, searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string
+  };
+  '%Object.prototype.toString%': (obj: {}) => string;
+  '%Object.prototype.hasOwnProperty%': (obj: {}, v: PropertyKey) => boolean;
+  '%Array.prototype.slice%': typeof arraySlice;
+  '%Array.prototype.map%': <T, U>(array: readonly T[], callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any) => U[];
+  '%Array.prototype.filter%': <T>(array: readonly T[], predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any) => T[];
+  '%Array.prototype.indexOf%': <T>(array: readonly T[], searchElement: T, fromIndex?: number) => number;
+  '%Function.prototype.apply%': <T, A extends any[], R>(fn: (...args: A) => R, thisArg: any, args: A) => R;
+  '%Function.prototype.call%': <T, A extends any[], R>(fn: (...args: A) => R, thisArg: any, ...args: A) => R;
+  '%Function.prototype.bind%': <T, A extends any[], R>(fn: (...args: A) => R, thisArg: any, ...args: A) => (...remainingArgs: A) => R;
+  '%Promise.prototype.then%': {
+    <T, R>(promise: Promise<T>, onfulfilled: (value: T) => R | PromiseLike<R>): Promise<R>;
+    <T, R>(promise: Promise<T>, onfulfilled: ((value: T) => R | PromiseLike<R>) | undefined | null, onrejected: (reason: any) => R | PromiseLike<R>): Promise<R>;
+  };
+  '%RegExp.prototype.test%': (regexp: RegExp, str: string) => boolean;
+  '%RegExp.prototype.exec%': (regexp: RegExp, str: string) => RegExpExecArray | null;
+  '%Error.prototype.toString%': (error: Error) => string;
+  '%TypeError.prototype.toString%': (error: TypeError) => string;
+  '%String.prototype.split%': (
+        obj: unknown,
+        splitter: string | RegExp | {
+            [Symbol.split](string: string, limit?: number): string[];
+        },
+        limit?: number | undefined
+    ) => string[];
 }
 
-interface RequestInit {
-    // whatwg/fetch standard options
-    body?: BodyInit | undefined;
-    headers?: HeadersInit | undefined;
-    method?: string | undefined;
-    redirect?: RequestRedirect | undefined;
-    signal?: AbortSignal | null | undefined;
+/**
+ * Returns a bound function for a prototype method, or a value for a static property.
+ *
+ * @param name - The name of the intrinsic (e.g. 'Array.prototype.slice')
+ * @param {AllowMissing} [allowMissing] - Whether to allow missing intrinsics (default: false)
+ */
+declare function callBound<K extends keyof SpecialCases | StripPercents<keyof SpecialCases>, S extends IntrinsicPath>(name: K, allowMissing?: AllowMissing): SpecialCases[`%${StripPercents<K>}%`];
+declare function callBound<K extends keyof SpecialCases | StripPercents<keyof SpecialCases>, S extends IntrinsicPath>(name: S, allowMissing?: AllowMissing): BoundIntrinsic<S>;
 
-    // node-fetch extensions
-    agent?: RequestOptions["agent"] | ((parsedUrl: URL) => RequestOptions["agent"]); // =null http.Agent instance, allows custom proxy, certificate etc.
-    compress?: boolean | undefined; // =true support gzip/deflate content encoding. false to disable
-    follow?: number | undefined; // =20 maximum redirect count. 0 to not follow redirect
-    size?: number | undefined; // =0 maximum response body size in bytes. 0 to disable
-    timeout?: number | undefined; // =0 req/res timeout in ms, it resets on redirect. 0 to disable (OS limit applies)
-
-    // node-fetch does not support mode, cache or credentials options
-}
-
-type RequestContext =
-    | "audio"
-    | "beacon"
-    | "cspreport"
-    | "download"
-    | "embed"
-    | "eventsource"
-    | "favicon"
-    | "fetch"
-    | "font"
-    | "form"
-    | "frame"
-    | "hyperlink"
-    | "iframe"
-    | "image"
-    | "imageset"
-    | "import"
-    | "internal"
-    | "location"
-    | "manifest"
-    | "object"
-    | "ping"
-    | "plugin"
-    | "prefetch"
-    | "script"
-    | "serviceworker"
-    | "sharedworker"
-    | "style"
-    | "subresource"
-    | "track"
-    | "video"
-    | "worker"
-    | "xmlhttprequest"
-    | "xslt";
-type RequestMode = "cors" | "no-cors" | "same-origin";
-type RequestRedirect = "error" | "follow" | "manual";
-type RequestCredentials = "omit" | "include" | "same-origin";
-
-type RequestCache =
-    | "default"
-    | "force-cache"
-    | "no-cache"
-    | "no-store"
-    | "only-if-cached"
-    | "reload";
-
-declare class Headers implements Iterable<[string, string]> {
-    constructor(init?: HeadersInit);
-    forEach(callback: (value: string, name: string) => void): void;
-    append(name: string, value: string): void;
-    delete(name: string): void;
-    get(name: string): string | null;
-    has(name: string): boolean;
-    raw(): { [k: string]: string[] };
-    set(name: string, value: string): void;
-
-    // Iterable methods
-    entries(): IterableIterator<[string, string]>;
-    keys(): IterableIterator<string>;
-    values(): IterableIterator<string>;
-    [Symbol.iterator](): Iterator<[string, string]>;
-}
-
-type BlobPart = ArrayBuffer | ArrayBufferView | Blob | string;
-
-interface BlobOptions {
-    type?: string | undefined;
-    endings?: "transparent" | "native" | undefined;
-}
-
-declare class Blob {
-    constructor(blobParts?: BlobPart[], options?: BlobOptions);
-    readonly type: string;
-    readonly size: number;
-    slice(start?: number, end?: number): Blob;
-    text(): Promise<string>;
-    arrayBuffer(): Promise<ArrayBuffer>;
-}
-
-declare class Body {
-    constructor(body?: any, opts?: { size?: number | undefined; timeout?: number | undefined });
-    arrayBuffer(): Promise<ArrayBuffer>;
-    blob(): Promise<Blob>;
-    body: NodeJS.ReadableStream;
-    bodyUsed: boolean;
-    buffer(): Promise<Buffer>;
-    json(): Promise<any>;
-    size: number;
-    text(): Promise<string>;
-    textConverted(): Promise<string>;
-    timeout: number;
-}
-
-interface SystemError extends Error {
-    code?: string | undefined;
-}
-
-declare class AbortError extends Error {
-    readonly name: "AbortError";
-    constructor(message: string);
-    readonly type: "aborted";
-}
-
-declare class FetchError extends Error {
-    name: "FetchError";
-    constructor(message: string, type: string, systemError?: SystemError);
-    type: string;
-    code?: string | undefined;
-    errno?: string | undefined;
-}
-
-declare class Response extends Body {
-    constructor(body?: BodyInit, init?: ResponseInit);
-    static error(): Response;
-    static redirect(url: string, status: number): Response;
-    clone(): Response;
-    headers: Headers;
-    ok: boolean;
-    redirected: boolean;
-    status: number;
-    statusText: string;
-    type: ResponseType;
-    url: string;
-}
-
-type ResponseType =
-    | "basic"
-    | "cors"
-    | "default"
-    | "error"
-    | "opaque"
-    | "opaqueredirect";
-
-interface ResponseInit {
-    headers?: HeadersInit | undefined;
-    size?: number | undefined;
-    status?: number | undefined;
-    statusText?: string | undefined;
-    timeout?: number | undefined;
-    url?: string | undefined;
-    counter?: number | undefined;
-}
-
-interface URLLike {
-    href: string;
-}
-
-type HeadersInit = Headers | string[][] | { [key: string]: string | string[] };
-type BodyInit =
-    | ArrayBuffer
-    | ArrayBufferView
-    | NodeJS.ReadableStream
-    | string
-    | URLSearchParams
-    | FormData;
-type RequestInfo = string | URLLike | Request;
-
-declare function fetch(
-    url: RequestInfo,
-    init?: RequestInit,
-): Promise<Response>;
-
-declare namespace fetch {
-    export {
-        AbortError,
-        Blob,
-        Body,
-        BodyInit,
-        FetchError,
-        Headers,
-        HeadersInit,
-        // HeaderInit is exported to support backwards compatibility. See PR #34382
-        HeadersInit as HeaderInit,
-        Request,
-        RequestCache,
-        RequestContext,
-        RequestCredentials,
-        RequestInfo,
-        RequestInit,
-        RequestMode,
-        RequestRedirect,
-        Response,
-        ResponseInit,
-        ResponseType,
-    };
-    export function isRedirect(code: number): boolean;
-
-    import _default = fetch;
-    export { _default as default };
-}
-
-export = fetch;
+export = callBound;
