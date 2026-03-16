@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from "./files";
-export * from "./caching";
-export * from "./shared";
-export { RequestOptions, Tool, CodeExecutionTool, SingleRequestOptions, } from "../requests";
-export * from "../content";
-export { FunctionCallingMode } from "../enums";
+import { Content, GenerateContentResponse } from "../../types";
+export declare function validateChatHistory(history: Content[]): void;
+/**
+ * Returns true if the response is valid (could be appended to the history), flase otherwise.
+ */
+export declare function isValidResponse(response: GenerateContentResponse): boolean;

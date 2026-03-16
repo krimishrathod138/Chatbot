@@ -14,9 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from "./files";
-export * from "./caching";
-export * from "./shared";
-export { RequestOptions, Tool, CodeExecutionTool, SingleRequestOptions, } from "../requests";
-export * from "../content";
-export { FunctionCallingMode } from "../enums";
+import { BatchEmbedContentsRequest, BatchEmbedContentsResponse, EmbedContentRequest, EmbedContentResponse, RequestOptions } from "../../types";
+export declare function embedContent(apiKey: string, model: string, params: EmbedContentRequest, requestOptions?: RequestOptions): Promise<EmbedContentResponse>;
+export declare function batchEmbedContents(apiKey: string, model: string, params: BatchEmbedContentsRequest, requestOptions?: RequestOptions): Promise<BatchEmbedContentsResponse>;

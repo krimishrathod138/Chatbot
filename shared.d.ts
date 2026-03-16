@@ -14,9 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from "./files";
-export * from "./caching";
-export * from "./shared";
-export { RequestOptions, Tool, CodeExecutionTool, SingleRequestOptions, } from "../requests";
-export * from "../content";
-export { FunctionCallingMode } from "../enums";
+import { ErrorDetails } from "../responses";
+export { ErrorDetails };
+/**
+ * Standard RPC error status object.
+ * @public
+ */
+export interface RpcStatus {
+    /**
+     * Error status code
+     */
+    code: number;
+    /**
+     * A developer-facing error message.
+     */
+    message: string;
+    /**
+     * A list of messages that carry the error details.
+     */
+    details?: ErrorDetails[];
+}
+/**
+ * Params to pass to {@link GoogleAIFileManager.listFiles} or
+ * {@link GoogleAICacheManager.list}
+ * @public
+ */
+export interface ListParams {
+    pageSize?: number;
+    pageToken?: string;
+}
